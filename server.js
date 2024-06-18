@@ -46,6 +46,21 @@ app.get('/products', async(req,res)=> {
     }
 })
 
+//Get product by Id endpoint
+app.get('/products/:id', async(req,res)=> {
+    try {
+
+        const {id} = req.params;
+        const product = await Product.findById(id);
+        res.status(200).json(product);
+        
+    } catch (error) {
+        
+        console.log("ERROR : "+error.message);
+        res.status(500).json({message:error.message});
+    }
+})
+
 //MongoDb connection
 mongoose.connect('mongodb://0.0.0.0:27017/node-apis') //connection url from mongodb compass contained 'localhost'. However, using 'localhost' here throws error hence used '0.0.0.0'
     .then(()=> {
